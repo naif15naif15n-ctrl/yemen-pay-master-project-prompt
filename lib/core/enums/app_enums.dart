@@ -19,6 +19,7 @@ enum AccountStatus {
   pendingVerification,
   suspended,
   locked,
+  disabled,
 }
 
 enum WalletStatus {
@@ -159,4 +160,26 @@ enum OtpVerificationStatus {
   expired,
   failed,
   maxAttemptsExceeded,
+}
+
+enum OtpPurpose {
+  registration,
+  login,
+  resetPassword,
+  resetPin,
+}
+
+enum OtpMode {
+  real,
+  demo,
+}
+
+enum AuthState {
+  initial,
+  unauthenticated,
+  authenticating,
+  authenticated,
+  pendingVerification,
+  sessionExpired,
+  error,
 }
