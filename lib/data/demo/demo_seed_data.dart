@@ -1,4 +1,5 @@
 import '../../core/enums/app_enums.dart';
+import '../../core/utils/security_util.dart';
 import '../../domain/models/models.dart';
 
 /// Clearly separated Demo Mode configuration and simulated seed records.
@@ -8,11 +9,45 @@ abstract final class DemoSeedData {
     id: 'demo-user-001',
     fullName: 'أحمد محمد الحميري',
     phoneNumber: '+967771234567',
+    email: 'ahmed.himyari@yemenpay.local',
+    passwordHash: SecurityUtil.hashWithSalt('YemenPay@2026'),
+    pinHash: SecurityUtil.hashWithSalt('123456'),
     role: UserRole.customer,
     status: AccountStatus.active,
+    isPhoneVerified: true,
     createdAt: DateTime(2026, 1, 15, 9, 30),
     hasPin: true,
     biometricEnabled: false,
+    isDemoUser: true,
+  );
+
+  static final User demoSuspendedUser = User(
+    id: 'demo-user-suspended',
+    fullName: 'مستخدم موقوف تجريبي',
+    phoneNumber: '+967731112233',
+    email: 'suspended@yemenpay.local',
+    passwordHash: SecurityUtil.hashWithSalt('YemenPay@2026'),
+    pinHash: SecurityUtil.hashWithSalt('123456'),
+    role: UserRole.customer,
+    status: AccountStatus.suspended,
+    isPhoneVerified: true,
+    createdAt: DateTime(2026, 2, 1),
+    hasPin: true,
+    isDemoUser: true,
+  );
+
+  static final User demoLockedUser = User(
+    id: 'demo-user-locked',
+    fullName: 'مستخدم مقفل تجريبي',
+    phoneNumber: '+967714445566',
+    email: 'locked@yemenpay.local',
+    passwordHash: SecurityUtil.hashWithSalt('YemenPay@2026'),
+    pinHash: SecurityUtil.hashWithSalt('123456'),
+    role: UserRole.customer,
+    status: AccountStatus.locked,
+    isPhoneVerified: true,
+    createdAt: DateTime(2026, 2, 1),
+    hasPin: true,
     isDemoUser: true,
   );
 
