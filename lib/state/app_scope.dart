@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import '../core/di/service_locator.dart';
 import 'app_controller.dart';
+import 'auth_controller.dart';
 import 'connection_controller.dart';
 import 'wallet_preview_controller.dart';
 
@@ -8,6 +9,7 @@ import 'wallet_preview_controller.dart';
 class AppStateContainer {
   AppStateContainer({required this.services})
       : appController = AppController(services.localStorageService),
+        authController = AuthController(services.authService),
         connectionController = ConnectionController(
           services.connectionMonitorService,
           services.localStorageService,
@@ -19,11 +21,13 @@ class AppStateContainer {
 
   final ServiceLocator services;
   final AppController appController;
+  final AuthController authController;
   final ConnectionController connectionController;
   final WalletPreviewController walletPreviewController;
 
   void dispose() {
     appController.dispose();
+    authController.dispose();
     connectionController.dispose();
     walletPreviewController.dispose();
     services.connectionMonitorService.dispose();
