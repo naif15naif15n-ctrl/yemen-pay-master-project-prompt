@@ -24,7 +24,8 @@ class ServiceLocator {
   }) {
     this.localStorageService =
         localStorageService ?? InMemoryLocalStorageService();
-    this.authService = authService ?? DemoAuthService();
+    this.authService = authService ??
+        DemoAuthService(storage: this.localStorageService);
     this.transactionService = transactionService ?? DemoTransactionService();
     this.syncService = syncService ?? DemoSyncService(this.localStorageService);
     this.connectionMonitorService =
