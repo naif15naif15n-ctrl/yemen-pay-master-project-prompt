@@ -1,16 +1,18 @@
 import '../../core/enums/app_enums.dart';
-import '../../services/storage/local_storage_service.dart';
 import '../../domain/models/models.dart';
+import '../../services/storage/local_storage_service.dart';
 
-/// In-memory implementation of [LocalStorageService] for Phase 1 & unit testing.
-/// Can be replaced in later phases with SQLite/SharedPreferences/SecureStorage
-/// without touching any state controllers or UI widgets.
+/// In-memory implementation of [LocalStorageService] for Phase 1 & 2 & unit testing.
+/// Can be replaced in later phases with SQLite/FlutterSecureStorage without touching any UI.
 class InMemoryLocalStorageService implements LocalStorageService {
   bool _onboardingCompleted = false;
   String? _themeMode = 'light';
   String? _localeCode = 'ar';
   bool _demoModeEnabled = true;
   Session? _session;
+  String? _authToken;
+
+  final Map<String, User> _users = <String, User>{};
   final Map<String, Wallet> _wallets = <String, Wallet>{};
   final Map<String, List<Transaction>> _transactions =
       <String, List<Transaction>>{};
@@ -55,6 +57,28 @@ class InMemoryLocalStorageService implements LocalStorageService {
   }
 
   @override
+  Future<void> saveUser(User user) async {
+    _users[user.id] = user;
+  }
+
+  @override
+  Future<User?> getUser(String userId) async => _users[userId];
+
+  @override
+  Future<User?> getUserByPhone(String normalizedPhone) async {
+    for (final User u in _users.values) {
+      if (u.phoneNumber == normalizedPhone) {
+        return u;
+      }
+    }
+    return null;
+  }
+
+  @override
+  Future<List<User>> getAllUsers() async =>
+      List<User>.unmodifiable(_users.values);
+
+  @override
   Future<Session?> getSession() async => _session;
 
   @override
@@ -65,6 +89,19 @@ class InMemoryLocalStorageService implements LocalStorageService {
   @override
   Future<void> clearSession() async {
     _session = null;
+  }
+
+  @override
+  Future<String?> getAuthToken() async => _authToken;
+
+  @override
+  Future<void> saveAuthToken(String token) async {
+    _authToken = token;
+  }
+
+  @override
+  Future<void> clearAuthToken() async {
+    _authToken = null;
   }
 
   @override

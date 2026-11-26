@@ -20,10 +20,20 @@ abstract interface class LocalStorageService {
   Future<bool> getDemoModeEnabled();
   Future<void> setDemoModeEnabled(bool enabled);
 
+  // User Management & Persistence
+  Future<void> saveUser(User user);
+  Future<User?> getUser(String userId);
+  Future<User?> getUserByPhone(String normalizedPhone);
+  Future<List<User>> getAllUsers();
+
   // User Session & Wallet Snapshot
   Future<Session?> getSession();
   Future<void> saveSession(Session session);
   Future<void> clearSession();
+
+  Future<String?> getAuthToken();
+  Future<void> saveAuthToken(String token);
+  Future<void> clearAuthToken();
 
   Future<Wallet?> getWalletSnapshot(String userId);
   Future<void> saveWalletSnapshot(Wallet wallet);
