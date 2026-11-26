@@ -11,17 +11,23 @@ abstract final class AppConstants {
       'Academic graduation project prototype — all financial operations, balances, and services are simulated and not real.';
 
   static const String defaultCountryCode = '+967';
+  static const String defaultCountryNameAr = 'اليمن';
   static const String defaultCurrencyCode = 'YER';
   static const List<String> supportedCurrencies = <String>['YER', 'USD', 'SAR'];
 
-  /// Yemen phone number format: +967 followed by 9 digits (typically starting with 7).
-  static final RegExp yemenPhoneRegex = RegExp(r'^\+9677\d{8}$');
+  /// Yemen phone number format: +967 followed by 7 and 8 digits.
+  static final RegExp yemenPhoneRegex = RegExp(r'^\+9677[01378]\d{7}$');
 
+  // OTP Configuration
   static const int otpLength = 6;
-  static const int otpExpirationSeconds = 180;
-  static const int otpRetrySeconds = 60;
+  static const int otpExpirationSeconds = 300; // 5 minutes
+  static const int otpRetrySeconds = 60;        // 60 seconds cooldown
   static const int maxOtpAttempts = 5;
-  static const int pinLength = 4;
+  static const String demoOtpCode = '123456';
+
+  // PIN Configuration (Phase 2 uses 6-digit PIN)
+  static const int pinLength = 6;
+  static const int minPasswordLength = 8;
 
   /// Explicitly supported operations in Local Server Offline-First mode.
   static const List<String> offlineSupportedOperations = <String>[
